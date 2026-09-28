@@ -1,0 +1,39 @@
+# renovate-config is a plexus-ms repo and eats the initiative's own cooking
+# (Manual, "The repos"): tools pinned here, verbs as mise tasks, checks wired
+# through hk. It holds one Renovate preset, `default.json`, which tenant repos
+# extend as `github>plexus-ms/renovate-config` (§ 9.1 PLX).
+
+# Verbs are asked as `mise :verb` like in every Plexus repo (§ 4.1 PLX); that
+# form needs the root marker even without sub-projects.
+monorepo_root = true
+
+[tools]
+hk = "latest"                  # Git hooks
+node = "24"                    # runtime for the validator; Renovate supports only its LTS range
+# Ships renovate-config-validator, the preset's static check. The exclude is
+# reviewed, not blanket: @yarnpkg/libzip@3.2.2 (via @yarnpkg/core) was published
+# by hand by the Yarn lead maintainer on 2025-09-18, while 3.2.0 and 3.2.1 came
+# from CI with provenance. Re-review when the renovate pin moves.
+"npm:renovate" = { version = "44.117.0", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
+
+[hooks]
+postinstall = "hk install --mise"
+
+# Contract verbs (§ 5.1 PLX) — the ones a preset repo has no use for exist
+# and pass as documented no-ops.
+
+[tasks.dev]
+description = "No-op: nothing to start; the preset is read by the hosted bot"
+run = 'echo "dev: nothing to start in renovate-config"'
+
+[tasks.build]
+description = "No-op: the preset ships as source, read from the default branch"
+run = 'echo "build: nothing to build in renovate-config"'
+
+[tasks.check]
+description = "Static check: the preset validates as a repo config, strictly"
+run = 'renovate-config-validator --strict --no-global default.json'
+
+[tasks.test]
+description = "No-op: the preset is exercised by every tenant repo's bot runs"
+run = 'echo "test: nothing to test in renovate-config"'

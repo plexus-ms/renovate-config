@@ -1,0 +1,52 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": [
+    "The shared Plexus update-bot preset (§ 9.1 PLX); a tenant repo extends it with one line.",
+    "Unattended merging is stratified by blast radius: packages merge on green CI, the release train always waits for a human."
+  ],
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":maintainLockFilesWeekly"
+  ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "copier": {
+    "description": "The hosted bot cannot run `copier update`; the release train's ship step owns template propagation.",
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "description": "npm ranges follow the version actually tested; other managers keep their own spelling, so a floating .node-version major stays floating.",
+      "matchManagers": ["npm"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "@plexus-ms packages run inside an app with immutable, provenance-attested versions: patch and minor merge unattended once CI is green.",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@plexus-ms/**"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "The ansible-galaxy manager hands a github.com git URL to the github-tags datasource verbatim, which resolves only owner/repo.",
+      "matchManagers": ["ansible-galaxy"],
+      "matchPackageNames": ["https://github.com/plexus-ms/platform.git"],
+      "overridePackageName": "plexus-ms/platform"
+    },
+    {
+      "description": "The release train: ci-cd workflow refs run in tenant CI next to its secrets, the plexus.platform collection runs as root on tenant hosts. A human reads the diff; never automerged.",
+      "matchPackageNames": ["plexus-ms/ci-cd", "plexus-ms/platform"],
+      "groupName": "plexus release train",
+      "labels": ["plexus-train"],
+      "automerge": false
+    },
+    {
+      "description": "A node major moves the runtime of every app in the repo at once: it waits for approval on the dependency dashboard.",
+      "matchDepNames": ["node"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
