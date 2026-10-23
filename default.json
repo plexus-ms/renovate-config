@@ -30,6 +30,14 @@
       "automerge": true
     },
     {
+      "description": "Dev tools that check and orchestrate but never become a runtime dependency of an app: patch and minor merge unattended once CI is green. They are third-party and run in CI and the image build, so a release waits three days before it is proposed, long enough for a compromised version to be pulled.",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["turbo", "typescript", "@types/**"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "minimumReleaseAge": "3 days",
+      "automerge": true
+    },
+    {
       "description": "The ansible-galaxy manager hands a github.com git URL to the github-tags datasource verbatim, which resolves only owner/repo.",
       "matchManagers": ["ansible-galaxy"],
       "matchPackageNames": ["https://github.com/plexus-ms/platform.git"],
