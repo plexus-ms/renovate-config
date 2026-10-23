@@ -1,9 +1,9 @@
 # renovate-config is a plexus-ms repo and eats the initiative's own cooking
-# (Manual, "The repos"): tools pinned here, verbs as mise tasks, checks wired
+# (§ 1.8 PLX): tools pinned here, verbs as mise tasks, checks wired
 # through hk. It holds one Renovate preset, `default.json`, which tenant repos
-# extend as `github>plexus-ms/renovate-config` (§ 9.1 PLX).
+# extend as `github>plexus-ms/renovate-config` (§ 2 PLX-Updates).
 
-# Verbs are asked as `mise :verb` like in every Plexus repo (§ 4.1 PLX); that
+# Verbs are asked as `mise :verb` like in every Plexus repo (§ 2 PLX-Repo); that
 # form needs the root marker even without sub-projects.
 monorepo_root = true
 # mise no longer walks the tree for project configs; the root is the only one.
@@ -22,7 +22,7 @@ node = "24"                    # runtime for the validator; Renovate supports on
 [hooks]
 postinstall = "hk install --mise"
 
-# Contract verbs (§ 5.1 PLX) — the ones a preset repo has no use for exist
+# Contract verbs (§ 3 PLX-Repo) — the ones a preset repo has no use for exist
 # and pass as documented no-ops.
 
 [tasks.dev]

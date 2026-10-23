@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": [
-    "The shared Plexus update-bot preset (§ 9.1 PLX); a tenant repo extends it with one line.",
+    "The shared Plexus update-bot preset (§ 2 PLX-Updates); a tenant repo extends it with one line.",
     "Unattended merging is stratified by blast radius: packages merge on green CI, the release train always waits for a human."
   ],
   "extends": [
@@ -51,7 +51,7 @@
       "automerge": false
     },
     {
-      "description": "The app is the unit of deployment (§ 8.2 PLX): the images in one app's compose file move as one PR, so one merge is one deploy and its services never run mismatched versions. The group is named after the app directory, apps/<app>/.",
+      "description": "The app is the unit of deployment (§ 2 PLX-Train): the images in one app's compose file move as one PR, so one merge is one deploy and its services never run mismatched versions. The group is named after the app directory, apps/<app>/.",
       "matchManagers": ["docker-compose"],
       "matchFileNames": ["apps/*/**"],
       "groupName": "app {{lookup (split packageFileDir \"/\") 1}}"
