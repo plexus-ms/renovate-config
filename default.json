@@ -51,7 +51,7 @@
       "automerge": false
     },
     {
-      "description": "The app is the unit of deployment (§ 2 PLX-Train): the images in one app's compose file move as one PR, so one merge is one deploy and its services never run mismatched versions. The group is named after the app directory, apps/<app>/.",
+      "description": "The app is the unit of deployment (§ 2 PLX-Release): the images in one app's compose file move as one PR, so one merge is one deploy and its services never run mismatched versions. The group is named after the app directory, apps/<app>/.",
       "matchManagers": ["docker-compose"],
       "matchFileNames": ["apps/*/**"],
       "groupName": "app {{lookup (split packageFileDir \"/\") 1}}"
