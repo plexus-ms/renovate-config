@@ -33,6 +33,10 @@ run = 'echo "dev: nothing to start in renovate-config"'
 description = "No-op: the preset ships as source, read from the default branch"
 run = 'echo "build: nothing to build in renovate-config"'
 
+[tasks.verify]
+description = "Perform all steps that verify code quality: check, then test"
+run = ['mise run check', 'mise run test']
+
 [tasks.check]
 description = "Static check: the preset validates as a repo config, strictly"
 run = 'renovate-config-validator --strict --no-global default.json'
