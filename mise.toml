@@ -17,7 +17,7 @@ node = "24"                    # runtime for the validator; Renovate supports on
 # reviewed, not blanket: @yarnpkg/libzip@3.2.2 (via @yarnpkg/core) was published
 # by hand by the Yarn lead maintainer on 2025-09-18, while 3.2.0 and 3.2.1 came
 # from CI with provenance. Re-review when the renovate pin moves.
-"npm:renovate" = { version = "44.117.0", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
+"npm:renovate" = { version = "44.181.6", trust_policy_excludes = ["@yarnpkg/libzip@3.2.2"] }
 
 [hooks]
 postinstall = "hk install --mise"
