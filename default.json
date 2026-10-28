@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": [
     "The shared Plexus update-bot preset (§ 2 PLX-Updates); a tenant repo extends it with one line.",
-    "Unattended merging is stratified by blast radius: packages merge on green CI, the release train always waits for a human."
+    "Unattended merging is stratified by blast radius: packages merge on green CI, the release train always waits for a human.",
+    "A third-party release waits three days before it is proposed, long enough for a compromised version to be pulled; pnpm enforces the same age at install time (pnpm-workspace.yaml), so a PR never carries a version the lockfile check rejects."
   ],
   "extends": [
     "config:recommended",
@@ -12,6 +13,7 @@
   ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
+  "minimumReleaseAge": "3 days",
   "copier": {
     "description": "The hosted bot cannot run `copier update`; the release train's ship step owns template propagation.",
     "enabled": false
@@ -23,18 +25,22 @@
       "rangeStrategy": "bump"
     },
     {
-      "description": "@plexus-ms packages run inside an app with immutable, provenance-attested versions: patch and minor merge unattended once CI is green.",
+      "description": "@plexus-ms packages are the initiative's own, published with immutable, provenance-attested versions: no release-age wait, and patch and minor merge unattended once CI is green.",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@plexus-ms/**"],
+      "minimumReleaseAge": null
+    },
+    {
       "matchDatasources": ["npm"],
       "matchPackageNames": ["@plexus-ms/**"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
     },
     {
-      "description": "Dev tools that check and orchestrate but never become a runtime dependency of an app: patch and minor merge unattended once CI is green. They are third-party and run in CI and the image build, so a release waits three days before it is proposed, long enough for a compromised version to be pulled.",
+      "description": "Dev tools that check and orchestrate but never become a runtime dependency of an app: patch and minor merge unattended once CI is green, after the preset-wide three-day wait.",
       "matchDatasources": ["npm"],
       "matchPackageNames": ["turbo", "typescript", "@types/**", "@biomejs/biome"],
       "matchUpdateTypes": ["patch", "minor"],
-      "minimumReleaseAge": "3 days",
       "automerge": true
     },
     {
@@ -44,10 +50,11 @@
       "overridePackageName": "plexus-ms/platform"
     },
     {
-      "description": "The release train: ci-cd workflow refs run in tenant CI next to its secrets, the plexus.platform collection runs as root on tenant hosts. A human reads the diff; never automerged.",
+      "description": "The release train: ci-cd workflow refs run in tenant CI next to its secrets, the plexus.platform collection runs as root on tenant hosts. It is the initiative's own publication, so no release-age wait; a human reads the diff, never automerged.",
       "matchPackageNames": ["plexus-ms/ci-cd", "plexus-ms/platform"],
       "groupName": "plexus release train",
       "labels": ["plexus-train"],
+      "minimumReleaseAge": null,
       "automerge": false
     },
     {
