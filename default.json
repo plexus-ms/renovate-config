@@ -68,6 +68,13 @@
       "matchDepNames": ["node"],
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "A TypeScript major changes the compiler every app and package in the repo builds with: it waits for approval on the dependency dashboard.",
+      "matchDatasources": ["npm"],
+      "matchDepNames": ["typescript"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
