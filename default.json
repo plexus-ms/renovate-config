@@ -3,7 +3,8 @@
   "description": [
     "The shared Plexus update-bot preset (§ 2 PLX-Updates); a tenant repo extends it with one line.",
     "Unattended merging is stratified by blast radius: packages merge on green CI, the release train always waits for a human.",
-    "A third-party release waits three days before it is proposed, long enough for a compromised version to be pulled; pnpm enforces the same age at install time (pnpm-workspace.yaml), so a PR never carries a version the lockfile check rejects."
+    "A third-party release waits three days before it is proposed, long enough for a compromised version to be pulled; pnpm enforces the same age at install time (pnpm-workspace.yaml), so a PR never carries a version the lockfile check rejects.",
+    "In a package repo `plx changeset` commits the changeset a bump owes to the bot's branch (§ 5 PLX-Delivery); that author is ignored, so the branch stays the bot's to rebase."
   ],
   "extends": [
     "config:recommended",
@@ -14,6 +15,7 @@
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
   "minimumReleaseAge": "3 days",
+  "gitIgnoredAuthors": ["plx-bot@users.noreply.github.com"],
   "copier": {
     "description": "The hosted bot cannot run `copier update`; the release train's ship step owns template propagation.",
     "enabled": false
