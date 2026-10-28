@@ -72,6 +72,13 @@
       "dependencyDashboardApproval": true
     },
     {
+      "description": "A package's `engines.node` floor states the major it supports, not the patch it was last tested on: the bump strategy would raise it on every LTS patch, so engines updates are off; the runtime itself moves with .node-version.",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "matchDepNames": ["node"],
+      "enabled": false
+    },
+    {
       "description": "A TypeScript major changes the compiler every app and package in the repo builds with: it waits for approval on the dependency dashboard.",
       "matchDatasources": ["npm"],
       "matchDepNames": ["typescript"],
